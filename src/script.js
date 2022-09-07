@@ -5,14 +5,6 @@ import gsap from 'gsap'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 /**
- * Cards
- */
-const card = document.querySelector('.card__inner');
-card.addEventListener('click', ()=>{
-    card.classList.toggle('is-flipped');
-})
-
-/**
  * Debug
  */
 const gui = new dat.GUI()
@@ -60,7 +52,7 @@ const material = new THREE.MeshStandardMaterial({color: parameters.materialColor
 const Mesh1 = new THREE.Group()
 const objectsDistance = 4
 const mesh1 = new THREE.Mesh(
-    new THREE.TorusGeometry(3, 0.4, 16, 60),
+    new THREE.TorusGeometry(2, 0.4, 16, 60),
     glassmaterial, 
 )
 mesh1.position.x = 0
@@ -68,20 +60,36 @@ mesh1.position.z = 1
 mesh1.position.y = - objectsDistance * 0
 
 Mesh1.add(mesh1)
+//scene.add(mesh1)
 
-//const mesh2 = new THREE.Mesh(
-//    new THREE.ConeGeometry(1, 2, 64),
-//    material
-//)
-//mesh2.position.x = - 2
-//mesh2.position.y = - objectsDistance * 1
+const mesh2 = new THREE.Mesh(
+    new THREE.ConeGeometry(1, 2, 64),
+    lettermaterial
+)
+mesh2.position.x = - 2
+mesh2.position.y = - objectsDistance * 1
+scene.add(mesh2)
 
-//const mesh3 = new THREE.Mesh(
-//    new THREE.TorusKnotGeometry(0.8, 0.35, 100, 32),
-//    material
-//)
-//mesh3.position.x = 2
-//mesh3.position.y = - objectsDistance * 2
+const mesh3 = new THREE.Mesh(
+    new THREE.TorusKnotGeometry(0.8, 0.35, 100, 32),
+    lettermaterial
+)
+mesh3.position.x = 2
+mesh3.position.y = - objectsDistance * 2
+scene.add(mesh3)
+
+//Mesh 1
+
+const mesh4 = new THREE.Mesh(
+    new THREE.SphereGeometry(1, 16, 16),
+    lettermaterial, 
+)
+mesh4.position.x = 0
+mesh4.position.z = 1
+mesh4.position.y = - objectsDistance * 0
+
+Mesh1.add(mesh4)
+
 
 /**
  * Models
@@ -111,9 +119,11 @@ oldValue = newValue;
 let mixer = null
  const gltfLoader = new GLTFLoader()
  gltfLoader.load(
-    '/models/name_reveal.glb',
+    '/models/wall_ref.glb',
     (gltf) =>
     {
+        /**
+         * 
         
         mixer = new THREE.AnimationMixer(gltf.scene)
 
@@ -124,15 +134,16 @@ let mixer = null
             animation.enable = true;
             animation.play()
         }
+         */
         
         while(gltf.scene.children.length)
         {
-            console.log(gltf.scene.children[0].children[0].material.color.r)
-            gltf.scene.children[0].children[0].material = lettermaterial
+            //console.log(gltf.scene.children[0].children[0].material.color.r)
+            //gltf.scene.children[0].children[0].material = lettermaterial
             const letters = new THREE.Group()
             letters.add(gltf.scene.children[0])
-            letters.scale.set(0.8, 0.8, 0.8)
-            letters.position.set(-2, -0.5, 2)
+            //letters.scale.set(0.8, 0.8, 0.8)
+            letters.position.set(-0.1, -6, -2)
             scene.add(letters)
             //scene.add(gltf.scene.children[0])
         }
@@ -154,7 +165,8 @@ directionalLight2.position.set(-2, -1, 0)
 
 scene.add(directionalLight1, directionalLight2)
 
-const sectionMeshes = [Mesh1] //mesh2, mesh3]
+
+
 
 /**
  * Particles
@@ -164,11 +176,11 @@ const sectionMeshes = [Mesh1] //mesh2, mesh3]
 const textureLoader = new THREE.TextureLoader()
 const particleTexture = textureLoader.load('/textures/particles/2.png')
 //Geometry
-const particlesCount = 500
+const particlesCount = 1500
 const positions = new Float32Array(particlesCount*3)
 for(let i = 0; i<particlesCount; i++){
     positions[i*3 + 0] = (Math.random()-0.5) * 10
-    positions[i*3 + 1] = objectsDistance * 0.5 - Math.random() * objectsDistance * sectionMeshes.length
+    positions[i*3 + 1] = objectsDistance * 0.5 - Math.random() * objectsDistance * 3
     positions[i*3 + 2] = (Math.random()-0.5) * 10
 }
 
@@ -184,7 +196,7 @@ const particlesMaterial = new THREE.PointsMaterial({
     blending: THREE.AdditiveBlending,
     map: particleTexture,
     alphaMap: particleTexture,
-    depthWrite: false // instead of sortParticles
+    //depthWrite: false // instead of sortParticles
 
 })
 
@@ -195,28 +207,16 @@ scene.add(particles)
 
 //Donut particles
 
-function createPoints(geom) {
-    var material = new THREE.PointsMaterial({
-      color: 0xffffff,
-      size: 0.1,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      map: particleTexture,
-      alphaMap: particleTexture,
-      depthWrite: false // instead of sortParticles
-    });
-  
-    let cloud = new THREE.Points(geom, material);
-    cloud.position.z = 1
-    return cloud;
-  }
+
 
   //const donutgeom = new THREE.TorusGeometry(3, 0.4, 16, 60)
-  const donutgeom = new THREE.SphereGeometry(4, 8, 8)
+  const donutgeom = new THREE.SphereGeometry(1.2, 32, 32)
   const donut = createPoints(donutgeom)
   
   Mesh1.add(donut)
   scene.add(Mesh1)
+
+  const sectionMeshes = [mesh1, mesh2, mesh3]
 
 
 /**
@@ -339,6 +339,9 @@ const tick = () =>
 
     }
 
+    Mesh1.rotation.x += deltaTime *0.1
+    Mesh1.rotation.y += deltaTime *0.15
+
     // Render
     renderer.render(scene, camera)
 
@@ -347,3 +350,19 @@ const tick = () =>
 }
 
 tick()
+
+function createPoints(geom) {
+    var material = new THREE.PointsMaterial({
+      color: 0xffffff,
+      size: 0.1,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      map: particleTexture,
+      alphaMap: particleTexture,
+      depthWrite: false // instead of sortParticles
+    });
+  
+    let cloud = new THREE.Points(geom, material);
+    cloud.position.z = 1
+    return cloud;
+  }

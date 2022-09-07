@@ -1,6 +1,6 @@
 :root{
     --primary: #2b00ff;
-    --secondary: #fe4880;
+    --secondary: #f0740f;
     --dark: #212121;
     --light: #f3f3f3;
 }
@@ -29,154 +29,13 @@ body{
     font-family:'Cabin', sans-serif;
     width: 100%;
     min-height: 100vh;
-}
-
-.card{
-    margin: 100px auto 0;
-    width: 400px;
-    height: 600px;
-    perspective: 800px;
-}
-
-.card__inner{
-    width: 100%;
-    height: 100%;
-    transition: transform 1s;
-    transform-style: preserve-3d;
-    cursor: pointer;
-    position: relative;
-}
-
-.card__inner.is-flipped{
-    transform: rotateY(180deg);
-}
-
-.card__face{
-    position:absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    overflow: hidden;
-    border-radius: 16px;
-    box-shadow: 0px 3px 18px 3px rgba(0,0,0,0.2);
-}
-
-.card__face--front{
-    background-image: linear-gradient(to bottom right, var(--primary), var(--secondary));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.card__face--front h2{
-    color: #fff;
-    font-size: 32px;
-}
-
-.card__face--back{
-    background-color: var(--light);
-    transform: rotateY(180deg);
-}
-
-.card__content{
-    width: 100%;
-    height: 100%;
-}
-
-.card__header{
-    position: relative;
-    padding: 30px 30px 40px;
+    color: var(--light);
+    line-height: 1.8;
 
 }
 
-.card__header::after{
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    border-radius: 0 0 50% 0;
-    background-image: linear-gradient(to bottom left, var(--primary) 10%, var(--secondary) 115%);
-}
- .header--pic{
-    display: block;
-    width: 128px;
-    height: 128px;
-    margin: 0 auto 30px;
-    border-radius: 50%;
-    background-color: #FFF;
-    border: 5px solid #FFF;
-    object-fit: cover;
- }
-
- .card__header h2{
-    color: #fff;
-    font-size: 28px;
-    font-weight: 900;
-    text-transform: uppercase;
-    text-align: center;
- }
 
 
- .card__body{
-    padding: 30px
- }
-
- .card__body h3{
-    color: var(--dark);
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 15px;
- }
-
- .card__body p{
-    color: var(--dark);
-    font-size: 18px;
-    line-height: 1.5;
-
- }
-
-.card__section h4{
-    display: flex;
-    align-items: center;
-    height: 10vh;
-    position: relative;
-    font-family: 'Cabin', sans-serif;
-    color: #ffeded;
-    text-transform: uppercase;
-    font-size: 7vmin;
-    padding-left: 10%;
-    padding-right: 10%;
-}
-
-.card__section{
-    min-height: 100vh;
-    padding: 100px 0;
-}
-
-.card__section .card{
-    padding: 15px;
-    flex: 0 0 calc(33.33% - 30px);
-
-}
-
-.container{
-    display: flex;
-    align-items: center;
-    padding-left: 10%;
-    padding-right: 10%;
-
-
-}
-
-.row{
-    display: flex;
-    flex-wrap: wrap;
-}
 
 
 .section
@@ -185,15 +44,108 @@ body{
     align-items: center;
     height: 100vh;
     position: relative;
-    font-family: 'Cabin', sans-serif;
-    color: #ffeded;
-    text-transform: uppercase;
-    font-size: 7vmin;
     padding-left: 10%;
     padding-right: 10%;
 }
 
-section:nth-child(odd)
-{
-    justify-content: flex-end;
+
+
+* {
+    box-sizing: border-box;
+  }
+  
+
+
+.container h1{
+    display: flex;
+    align-items: center;
+    height: 20vh;
+    position: relative;
+
 }
+  
+.column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+}
+  
+.row {margin: 0 -5px;}
+  
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+  
+.card {
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* this adds the "card" effect */
+    padding: 10rem 0 0;
+    max-width: 35ch;
+    border-radius: 0.3rem;
+    overflow: hidden;
+    transition: transform 500ms ease;
+}
+
+.card:hover{
+    transform: scale(1.05);
+}
+
+
+.card p{
+    font-size: 12px
+}
+
+
+.card-content{
+    --padding: 1.5rem;
+    padding: var(--padding);
+    background: linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.37)
+    );
+    transform: translateY(65%);
+    transition: transform 700ms ease;
+}
+
+.card:hover .card-content{
+    transform: translateY(0%);
+
+}
+
+.card-title{
+    position: relative;
+    width: max-content;
+    max-width: 100%;
+    font-size:24px ;
+}
+
+.card-title::after{
+    content: "";
+    position:absolute;
+    height: 3px;
+    left: calc(-1 * var(--padding));
+    bottom: -2px;
+    width: calc(100% + var(--padding));
+    background: var(--secondary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 500ms ease;
+}
+
+.card:hover .card-title::after {
+    transform: scaleX(1);
+}
+  
+  /* Responsive columns - one column layout (vertical) on small screens */
+  @media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
