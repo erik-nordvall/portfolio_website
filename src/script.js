@@ -4,6 +4,13 @@ import * as dat from 'lil-gui'
 import gsap from 'gsap'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
+/**
+ * Cards
+ */
+const card = document.querySelector('.card__inner');
+card.addEventListener('click', ()=>{
+    card.classList.toggle('is-flipped');
+})
 
 /**
  * Debug
@@ -79,6 +86,28 @@ Mesh1.add(mesh1)
 /**
  * Models
  */
+
+/** Kan detta vara något för att mappa animationer till vart i tiden man befinner sig?
+ * let oldValue = 0;
+
+window.addEventListener('scroll' , function(e){
+
+var newValue = window.pageYOffset;
+
+if(oldValue - newValue < 0){
+    mixer.update( (newValue - oldValue) / 250 );
+} 
+else if(oldValue - newValue > 0){
+   mixer.update(  (newValue - oldValue ) / 250 ) ;
+}
+oldValue = newValue;
+});
+ */
+
+
+
+
+
 let mixer = null
  const gltfLoader = new GLTFLoader()
  gltfLoader.load(
@@ -87,6 +116,7 @@ let mixer = null
     {
         
         mixer = new THREE.AnimationMixer(gltf.scene)
+
         for(let i = 0; i<gltf.animations.length; i++){
             const animation = mixer.clipAction(gltf.animations[i])
             animation.setLoop(THREE.LoopOnce);
@@ -251,10 +281,10 @@ window.addEventListener('scroll',()=>
         gsap.to(
             sectionMeshes[currentSection].rotation,
             {
-                duration: 1.5,
+                duration: 6,
                 ease: 'power2.inOut',
-                x:'+=6',
-                y:'+=6',
+                x:'+=3',
+                y:'+=3',
                 //z: '+=1.5'
             }
         )
