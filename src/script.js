@@ -138,8 +138,9 @@ let mixer = null
         
         while(gltf.scene.children.length)
         {
-            //console.log(gltf.scene.children[0].children[0].material.color.r)
+            console.log(gltf.scene.children[0].material)
             //gltf.scene.children[0].children[0].material = lettermaterial
+            gltf.scene.children[0].material = lettermaterial
             const letters = new THREE.Group()
             letters.add(gltf.scene.children[0])
             //letters.scale.set(0.8, 0.8, 0.8)

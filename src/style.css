@@ -1,8 +1,17 @@
 :root{
     --primary: #2b00ff;
     --secondary: #f0740f;
-    --dark: #212121;
+    --dark: #020b2c;
     --light: #f3f3f3;
+    --normal_purple_light: #8080ff;
+    --normal_purple_dark: #8025da;
+    --normal_green_light: #80dada;
+    --normal_green_dark: #36c9c9;
+    --normal_blue_light: #2580da;
+    --normal_blue_dark: #3636c9;
+    --normal_pink_light: #da80da;
+    --normal_pink_dark: #c936c9;
+    --normal_beige: #c9c9c9;
 }
 
 *
@@ -131,7 +140,7 @@ body{
     left: calc(-1 * var(--padding));
     bottom: -2px;
     width: calc(100% + var(--padding));
-    background: var(--secondary);
+    background: var(--normal_green_light);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 500ms ease;
