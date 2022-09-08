@@ -135,18 +135,20 @@ let mixer = null
             animation.play()
         }
          */
-        
-        while(gltf.scene.children.length)
+        console.log(gltf.scene.children.length)
+        //while(gltf.scene.children.length)
+        for(let i = 0; i<gltf.scene.children.length; i++)
         {
-            console.log(gltf.scene.children[0].material)
+            console.log(gltf.scene.children[i])
             //gltf.scene.children[0].children[0].material = lettermaterial
-            gltf.scene.children[0].material = lettermaterial
+            gltf.scene.children[1].material = lettermaterial
             const letters = new THREE.Group()
-            letters.add(gltf.scene.children[0])
+            letters.add(gltf.scene.children[1])
             //letters.scale.set(0.8, 0.8, 0.8)
-            letters.position.set(-0.1, -6, -2)
-            scene.add(letters)
+            gltf.scene.position.set(-0.1, -6, -2)
+            scene.add(gltf.scene)
             //scene.add(gltf.scene.children[0])
+            
         }
         //console.log(scene)
     }
@@ -162,9 +164,12 @@ let mixer = null
 const directionalLight2 = new THREE.DirectionalLight('#ffffff', 2)
 directionalLight2.position.set(-2, -1, 0)
 
+const directionalLight3 = new THREE.DirectionalLight('#ffffff', 5)
+directionalLight3.position.set(0, -1, -3)
 
 
-scene.add(directionalLight1, directionalLight2)
+
+scene.add(directionalLight1, directionalLight2, directionalLight3)
 
 
 
