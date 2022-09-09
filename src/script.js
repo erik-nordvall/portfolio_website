@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import * as dat from 'lil-gui'
 import gsap from 'gsap'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { randInt } from 'three/src/math/MathUtils'
 
 /**
  * Debug
@@ -19,6 +20,7 @@ gui
     {
         material.color.set(parameters.materialColor)
     })
+gui.hide()
 
 /**
  * Base
@@ -28,7 +30,7 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
-
+const objectsDistance = 2
 
 /**
  * Objects
@@ -37,20 +39,125 @@ const scene = new THREE.Scene()
 const lettermaterial = new THREE.MeshNormalMaterial()
 
 const glassmaterial  = new THREE.MeshPhysicalMaterial({
+    //color:'#000000',
     //metalness: 0,  
-    roughness: 0.2,
-    transmission: 1,
+    roughness: 0.1,
+    transmission: 0.98,
     thickness: 0.5, // Add refraction!
   });
+/**
+ * 
+
+const metalmaterial  = new THREE.MeshPhysicalMaterial({
+   color: '#80dada',   metalness: 0,  
+    roughness: 0.5,
+    transmission: 0.5,
+    dithering: false
+    //thickness: 0.5, // Add refraction!
+  });
+ */
+
 
 const material = new THREE.MeshStandardMaterial({color: parameters.materialColor})
 
 
 //Meshes
+const spheres = []
+const sphere_geom = new THREE.SphereGeometry( 0.1, 32, 16 );
+				
+
+	for ( let i = 0; i < 300; i ++ ) {
+
+        
+
+		const mesh = new THREE.Mesh( sphere_geom, lettermaterial );
+		mesh.position.x = Math.random() * 10 - 5;
+		mesh.position.y = objectsDistance * 0.5 - (Math.random() * objectsDistance)
+		mesh.position.z = Math.random() * 10 - 5;
+
+		mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+
+		scene.add( mesh );
+
+		spheres.push( mesh );
+
+		}
+
+const cylinders = []
+const cylinder_geom = new THREE.CylinderGeometry(0.005,0.005, 0.3, 64);
+const cylinder_colors =[
+    '#8080ff',
+    '#8025da',
+    '#80dada',
+    '#36c9c9',
+    '#2580da',
+    '#3636c9',
+    '#da80da',
+    '#c936c9',
+    '#c9c9c9'
+]
+console.log(cylinder_colors)
+
+
+const cylinder_material = new THREE.MeshStandardMaterial()
+for ( let i = 0; i < 500; i ++ ) {
+
+
+    
+    
+
+    const mesh = new THREE.Mesh( cylinder_geom, cylinder_material );
+    mesh.position.x = Math.random() * 10 - 5;
+    mesh.position.y = Math.random() * 10 - 5;
+    mesh.position.z = Math.random() * 10 - 5;
+
+    mesh.rotation.x = Math.random() * 10 - 5;
+    mesh.rotation.z = Math.random() * 10 - 5;
+
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+
+    scene.add( mesh );
+
+    cylinders.push( mesh );
+
+    }
+
+    for ( let i = 0, il = cylinders.length; i < il; i ++ ) {
+        const rndInt = randomIntFromInterval(0, 8)
+        console.log(rndInt)
+        const cylinder = cylinders[ i ];
+        cylinder.material.color.set(cylinder_colors[rndInt])
+        console.log(cylinder.material.color)
+
+    }
+    
+
+const donuts = []
+const donut_geom = new THREE.TorusGeometry(0.1,0.01, 64, 64);
+
+for ( let i = 0; i < 100; i ++ ) {
+    const mesh = new THREE.Mesh( donut_geom, glassmaterial );
+    mesh.position.x = Math.random() * 10 - 5;
+    mesh.position.y = Math.random() * 10 - 5;
+    mesh.position.z = Math.random() * 10 - 5;
+
+    mesh.rotation.x = Math.random() * 10 - 5;
+    mesh.rotation.z = Math.random() * 10 - 5;
+
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+
+    scene.add( mesh );
+
+    donuts.push( mesh );
+
+    }
+
+
+
 
 //Mesh 1
 const Mesh1 = new THREE.Group()
-const objectsDistance = 4
+
 const mesh1 = new THREE.Mesh(
     new THREE.TorusGeometry(2, 0.4, 16, 60),
     glassmaterial, 
@@ -59,7 +166,7 @@ mesh1.position.x = 0
 mesh1.position.z = 1
 mesh1.position.y = - objectsDistance * 0
 
-Mesh1.add(mesh1)
+//scene.add(mesh1)
 //scene.add(mesh1)
 
 const mesh2 = new THREE.Mesh(
@@ -68,7 +175,7 @@ const mesh2 = new THREE.Mesh(
 )
 mesh2.position.x = - 2
 mesh2.position.y = - objectsDistance * 1
-scene.add(mesh2)
+//scene.add(mesh2)
 
 const mesh3 = new THREE.Mesh(
     new THREE.TorusKnotGeometry(0.8, 0.35, 100, 32),
@@ -82,13 +189,13 @@ scene.add(mesh3)
 
 const mesh4 = new THREE.Mesh(
     new THREE.SphereGeometry(1, 16, 16),
-    lettermaterial, 
+    glassmaterial, 
 )
 mesh4.position.x = 0
 mesh4.position.z = 1
-mesh4.position.y = - objectsDistance * 0
+mesh4.position.y = - objectsDistance * 1
 
-Mesh1.add(mesh4)
+//scene.add(mesh4)
 
 
 /**
@@ -134,7 +241,7 @@ let mixer = null
             animation.enable = true;
             animation.play()
         }
-         */
+         
         console.log(gltf.scene.children.length)
         //while(gltf.scene.children.length)
         for(let i = 0; i<gltf.scene.children.length; i++)
@@ -150,6 +257,7 @@ let mixer = null
             //scene.add(gltf.scene.children[0])
             
         }
+        */
         //console.log(scene)
     }
 )
@@ -220,9 +328,9 @@ scene.add(particles)
   const donut = createPoints(donutgeom)
   
   Mesh1.add(donut)
-  scene.add(Mesh1)
+  //scene.add(Mesh1)
 
-  const sectionMeshes = [mesh1, mesh2, mesh3]
+  const sectionMeshes = [mesh1, mesh2, mesh3, mesh4]
 
 
 /**
@@ -329,6 +437,36 @@ const tick = () =>
 
     }
 
+
+    for ( let i = 0, il = spheres.length; i < il; i ++ ) {
+
+        const sphere = spheres[ i ];
+        const timer = 0.000005 * Date.now()
+        sphere.position.x = 5 * Math.cos( timer + i );
+        sphere.position.y = 5 * Math.sin( timer + i * 0.9 );
+
+    }
+
+    for ( let i = 0, il = cylinders.length; i < il; i ++ ) {
+
+        const cylinder = cylinders[ i ];
+        const timer = 0.000005 * Date.now()
+        cylinder.position.x = 5 * Math.cos( timer + i *0.8);
+        cylinder.position.y = 5 * Math.sin( timer + i * 1.1 );
+        cylinder.rotation.x = 5 * (timer + i );
+        cylinder.rotation.z = 6* (timer + i )
+
+    }
+    for ( let i = 0, il = donuts.length; i < il; i ++ ) {
+
+        const donut = donuts[ i ];
+        const timer = 0.000005 * Date.now()
+        donut.position.x = 5 * Math.cos( timer + i *1.1);
+        donut.position.y = 5 * Math.sin( timer + i * 1.6 );
+        donut.rotation.x = 5 * (timer + i );
+        donut.rotation.z = 3* (timer + i )
+
+    }
     //Animate Camera
     camera.position.y =  - scrollY / sizes.height * objectsDistance
 
@@ -372,3 +510,8 @@ function createPoints(geom) {
     cloud.position.z = 1
     return cloud;
   }
+
+  function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+  

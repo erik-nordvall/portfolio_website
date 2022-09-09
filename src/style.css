@@ -45,8 +45,6 @@ body{
 
 
 
-
-
 .section
 {
     display: flex;
@@ -57,20 +55,100 @@ body{
     padding-right: 10%;
 }
 
+.first-section {
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* this adds the "card" effect */
+    padding: 18rem 0 0;
+    width: 100%;
+    border-radius: 0.3rem;
+    overflow: hidden;
+    transition: transform 500ms ease;
+}
+
+.first-section:hover{
+    transform: scale(1.05);
+}
+
+
+.first-section p{
+    font-size: 20px
+}
+
+
+.first-section-content{
+    --padding: 1.5rem;
+    padding: var(--padding);
+    background: linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.37)
+    );
+    transform: translateY(46%);
+    transition: transform 700ms ease;
+}
+
+.first-section:hover .first-section-content{
+    transform: translateY(0%);
+
+}
+
+.first-section-title{
+    position: relative;
+    width: max-content;
+    max-width: 100%;
+    text-transform: uppercase;
+    font-size:50px ;
+}
+
+.first-section-title::after{
+    content: "";
+    position:absolute;
+    height: 3px;
+    left: calc(-1 * var(--padding));
+    bottom: -2px;
+    width: calc(100% + var(--padding));
+    background: var(--normal_green_light);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 500ms ease;
+}
+
+.first-section:hover .first-section-title::after {
+    transform: scaleX(1);
+}
+
 
 
 * {
     box-sizing: border-box;
   }
-  
+
 
 
 .container h1{
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* this adds the "card" effect */
     display: flex;
     align-items: center;
     height: 20vh;
+    padding-left: 1.5rem;
     position: relative;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 0.3rem;
+    overflow: hidden;
+    transition: transform 500ms ease;
 
+}
+
+.container h1:hover {
+    transform: scale(1.02);
 }
   
 .column {
